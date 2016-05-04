@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Job Board</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>Job Listing</h1>
+            <ul class="list-group">
+                <job v-for="job in jobs" :job="job">
+
+                </job>
+                <pre>{{ $data | json }}</pre>
+            </ul>
+            <!-- /.list-group -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#app -->
+
+    <template id="template-job-raw">
+        <li class="list-group-item">
+            {{ job.title }} said "{{ job.reference }}"
+         <span>{{job.location}}</span>
+        </li>
+        <!-- /.list-group-item -->
+    </template>
+    <!-- /#template-story-raw -->
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.17/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript">
+        Vue.component('job', {
+            template: "#template-job-raw",
+            props: ['job'],
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                jobs: []
+            },
+        ready: function() {
+            $.get('api/jobs', function(data) {
+                vm.jobs = data;
+            })
+        }
+    })
+
+</script>
+
+</body>
+</html>

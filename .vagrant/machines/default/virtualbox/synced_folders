@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/jobboard":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/jobboard","hostpath":"/Users/yameste/Code/jobboard","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/yameste/Code/jobboard","disabled":false}}}
