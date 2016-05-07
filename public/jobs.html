@@ -7,51 +7,120 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div id="app">
-        <div class="container">
-            <h1>Job Listing</h1>
-            <ul class="list-group">
-                <job v-for="job in jobs" :job="job">
+<main>
+    <div class="container">
+       <h1>Job Board</h1>
+        <div id="v-app">
+            <table class="table table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>Reference</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Employer</th>
+                    <th>Location</th>
+                    <th>Salary</th>
+                    <th>Post Date</th>
+                    <th>Actions</th>
+                </tr>
+                <tr v-for="job in jobs" is="job" :job="job"></tr>
+            </table>
+            <!-- /.table -->
+            <template id="template-job-raw">
+                <tr>
+                    <td>
+                        {{job.id}}
+                    </td>
+                    <td>
+                        <input v-if="job.editing" v-model="job.reference" class="form-control">
+                        </input>
+                        <span v-else>
+                            {{ job.reference }}
+                        </span>
 
-                </job>
-                <pre>{{ $data | json }}</pre>
-            </ul>
-            <!-- /.list-group -->
+                    </td>
+                    <td>
+                        <input v-if="job.editing" v-model="job.title" class="form-control">
+                        </input>
+                        <span v-else>
+                             {{ job.title }}
+                        </span>
+                    </td>
+                    <td>
+                        <input v-if="job.editing" v-model="job.type" class="form-control">
+                        </input>
+                        <span v-else>
+                            {{ job.type }}
+                        </span>
+                    </td>
+                    <td>
+                        <input v-if="job.editing" v-model="job.description" class="form-control">
+                        </input>
+                        <span v-else>
+                            {{ job.description }}
+                        </span>
+                    </td>
+                    <td>
+                        <input v-if="job.editing" v-model="job.location" class="form-control">
+                        </input>
+                        <span v-else>
+                           {{ job.location }}
+                        </span>
+
+                    </td>
+                    <td>
+                        <input v-if="job.editing" v-model="job.employer" class="form-control">
+                        </input>
+                        <span v-else>
+                            {{ job.employer }}
+                        </span>
+                    </td>
+                    <td>
+                        <input v-if="job.editing" v-model="job.salary" class="form-control">
+                        </input>
+                        <span v-else>
+                            {{ job.salary }}
+                        </span>
+                    </td>
+                    <td>
+                        <input v-if="job.editing" v-model="job.post_date" class="form-control">
+                        </input>
+                        <span v-else>
+                            {{ job.post_date }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="btn-group" v-if="!job.editing">
+                            <button @click="editJob(job)" class="btn btn-default">Edit</button>
+                            <button @click="deleteJob(job)" class="btn btn-danger">Delete</button>
+                        </div>
+
+                        <div class="btn-group" v-else>
+                            <!--If the job is retrieved from the db then it will have an id-->
+                            <button v-if="job.id" class="btn btn-primary" @click="updateJob(job)">Update Job
+                            </button>
+
+                            <button @click="job.editing=false" class="btn btn-default">Cancel</button>
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </template>
+            <!-- /#template-job-raw -->
+            <p class="lead">Here's a list of all your jobs.
+
+            </p>
+            <pre>{{ $data | json }}</pre>
         </div>
-        <!-- /.container -->
+        <!-- /#v-app -->
     </div>
-    <!-- /#app -->
-
-    <template id="template-job-raw">
-        <li class="list-group-item">
-            {{ job.title }} said "{{ job.reference }}"
-         <span>{{job.location}}</span>
-        </li>
-        <!-- /.list-group-item -->
-    </template>
-    <!-- /#template-story-raw -->
-
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.17/vue.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript">
-        Vue.component('job', {
-            template: "#template-job-raw",
-            props: ['job'],
-        });
-
-        var vm = new Vue({
-            el: '#app',
-            data: {
-                jobs: []
-            },
-        ready: function() {
-            $.get('api/jobs', function(data) {
-                vm.jobs = data;
-            })
-        }
-    })
-
-</script>
-
+    <!-- /.container -->
+</main>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.17/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.js"></script>
+<script src='/js/app.js' type="text/javascript"></script>
 </body>
 </html>
