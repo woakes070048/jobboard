@@ -1,7 +1,13 @@
+
+
 Vue.component('job', {
     template: '#template-job-raw',
     props: ['job'],
     methods: {
+        deleteJob: function (job) {
+            this.$parent.jobs.$remove(job)
+            this.$http.delete('/api/jobs/' + job.id)
+        },
         editJob: function (job) {
             job.editing = true;
         },
@@ -27,6 +33,9 @@ Vue.component('job', {
     
 });
 
+
+
+
 new Vue({
     el: '#v-app',
     data: {
@@ -36,6 +45,19 @@ new Vue({
         this.fetchJobs()
     },
     methods: {
+        createJob: function() {
+          var newJob = {
+                reference: "",
+                title: "",
+                type: "",
+                description: "",
+                employer: "",
+                location: "",
+                salary: "",
+                editing: true
+          };  
+            this.jobs.push(newJob);
+        },
         fetchJobs: function () {
             var vm = this;
             this.$http.get('/api/jobs')

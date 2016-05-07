@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Job Board</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
@@ -28,6 +29,7 @@
             </table>
             <!-- /.table -->
             <template id="template-job-raw">
+
                 <tr>
                     <td>
                         {{job.id}}
@@ -84,11 +86,7 @@
                         </span>
                     </td>
                     <td>
-                        <input v-if="job.editing" v-model="job.post_date" class="form-control">
-                        </input>
-                        <span v-else>
-                            {{ job.post_date }}
-                        </span>
+                        {{ job.post_date }}
                     </td>
                     <td>
                         <div class="btn-group" v-if="!job.editing">
@@ -100,7 +98,10 @@
                             <!--If the job is retrieved from the db then it will have an id-->
                             <button v-if="job.id" class="btn btn-primary" @click="updateJob(job)">Update Job
                             </button>
-
+                            <button class="btn btn-success" @click="storeJob(job)">
+                                Save New Job
+                            </button>
+                            <!-- /.btn -->
                             <button @click="job.editing=false" class="btn btn-default">Cancel</button>
                         </div>
 
@@ -111,6 +112,9 @@
             </template>
             <!-- /#template-job-raw -->
             <p class="lead">Here's a list of all your jobs.
+                <button @click="createJob()" class="btn btn-primary">
+                    Add a new one?
+                </button>
 
             </p>
             <pre>{{ $data | json }}</pre>
