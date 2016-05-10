@@ -12,6 +12,15 @@
     <div class="container">
        <h1>Job Board</h1>
         <div id="v-app">
+            <div class="pagination">
+                <button @click="fetchJobs(pagination.prev_page_url">
+                    Previous
+                </button>
+                <button @click="fetchJobs(pagination.next_page_url">
+                    Next
+                </button>
+            </div>
+            <!-- /.pagination -->
             <table class="table table-striped">
                 <tr>
                     <th>#</th>
@@ -98,7 +107,7 @@
                             <!--If the job is retrieved from the db then it will have an id-->
                             <button v-if="job.id" class="btn btn-primary" @click="updateJob(job)">Update Job
                             </button>
-                            <button class="btn btn-success" @click="storeJob(job)">
+                            <button v-else class="btn btn-success" @click="storeJob(job)">
                                 Save New Job
                             </button>
                             <!-- /.btn -->
